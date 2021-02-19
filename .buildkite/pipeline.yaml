@@ -10,7 +10,7 @@ steps:
       # Pull all git submodules, required for the hugo theme
       - git submodule update --init --recursive
       # Build the spec
-      - /bin/sh -c "scripts/generate-matrix-org-assets"
+      - scripts/generate-matrix-org-assets
     artifact_paths:
       - assets.tar.gz
     plugins:
@@ -19,6 +19,7 @@ steps:
           # https://gohugo.io/getting-started/installing/#docker
           # We use the extended (ext-) version for SCSS support.
           image: klakegg/hugo:ext-alpine
+          shell: ["/bin/sh", "-e", "-c"]
 
   - label: "rebuild matrix.org"
     trigger: "matrix-dot-org"

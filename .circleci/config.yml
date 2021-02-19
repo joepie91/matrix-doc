@@ -10,7 +10,7 @@ gennewdoc: &gendoc
   # Note: We use a custom config file for circleci due to some specifics with hosting the
   #       site using CircleCI's artifacts platform. See config-circleci.toml for details.
   command: |
-    apk add nodejs npm git python3
+    apk add nodejs npm git hugo
     npm i
     cat config-circleci.toml config.toml > hugo-config.toml
     hugo --config hugo-config.toml --baseURL "/${CIRCLE_NODE_INDEX}/public"

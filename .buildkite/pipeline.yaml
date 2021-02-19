@@ -14,7 +14,7 @@ steps:
     artifact_paths:
       - assets.tar.gz
     plugins:
-      - docker#v3.0.1:
+      - docker#v3.7.0:
           # The Hugo docker image recommended by the Hugo project:
           # https://gohugo.io/getting-started/installing/#docker
           # We use the extended (ext-) version for SCSS support.

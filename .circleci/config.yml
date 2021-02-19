@@ -7,14 +7,11 @@ gendoc: &legacygendoc
 gennewdoc: &gendoc
   name: Generate the docs
   # Note: Node dependencies are required for the hugo build.
-  # Note: The hugo theme in use is a git submodule, which has its own submodules, which
-  #       all need to be loaded.
   # Note: We use a custom config file for circleci due to some specifics with hosting the
   #       site using CircleCI's artifacts platform. See config-circleci.toml for details.
   command: |
-    apk add nodejs npm git
+    apk add nodejs npm git python3
     npm i
-    git submodule update --init --recursive
     cat config-circleci.toml config.toml > hugo-config.toml
     hugo --config hugo-config.toml --baseURL "/${CIRCLE_NODE_INDEX}/public"
 
@@ -90,15 +87,13 @@ jobs:
           command: DOCS_URL="${CIRCLE_BUILD_URL}/artifacts/${CIRCLE_NODE_INDEX}/${CIRCLE_WORKING_DIRECTORY/#\~/$HOME}/scripts/gen/index.html"; echo $DOCS_URL
   build-docs:
     docker:
-      # The Hugo docker image recommended by the Hugo project:
-      # https://gohugo.io/getting-started/installing/#docker
-      # We use the extended (ext-) version for SCSS support.
-      - image: klakegg/hugo:ext-alpine
+      - image: alpine
     steps:
-      # Install git in the image, otherwise the checkout script will use CircleCI's git client
-      # which does not pull submodules
+      # Note: We install git in the image so we can pull git submodules. The hugo theme in use
+      # is a git submodule, which has its own submodules, and all need to be loaded.
       - run: apk add git
       - checkout
+      - run: git submodule update --init --recursive
       - run: *gendoc
       - store_artifacts:
           path: public

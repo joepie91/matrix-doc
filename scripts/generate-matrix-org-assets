@@ -18,7 +18,7 @@ npm run get-proposals
 ./scripts/gendoc.py -d assets/spec
 
 # generate the spec docs
-hugo
+hugo -d assets/public
 
 # and the swagger
 ./scripts/dump-swagger.py -o assets/spec/client_server/unstable.json

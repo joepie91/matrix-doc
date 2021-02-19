@@ -10,7 +10,7 @@ steps:
       # Pull all git submodules, required for the hugo theme
       - git submodule update --init --recursive
       # Build the spec
-      - scripts/generate-matrix-org-assets
+      - /bin/sh -c "scripts/generate-matrix-org-assets"
     artifact_paths:
       - assets.tar.gz
     plugins:

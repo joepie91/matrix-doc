@@ -8,14 +8,11 @@ cd `dirname $0`/..
 
 mkdir -p assets
 
-if [ "$CIRCLECI" != "true" ]
-then
-    # generate specification/proposals.rst
-    ./scripts/proposals.py
+# generate specification/proposals.rst
+./scripts/proposals.py
 
-    # New script to pull proposal information. Will eventually completely replace the above
-    npm run get-proposals
-fi
+# New script to pull proposal information. Will eventually completely replace the above
+npm run get-proposals
 
 # generate the legacy spec docs
 ./scripts/gendoc.py -d assets/spec
